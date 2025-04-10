@@ -15,7 +15,7 @@ main = do
   putStrLn "============================"
 
   -- Generate test data
-  let size = 10_000_000
+  let size = 10_000_001
       originalData = map fromIntegral [1 .. size] :: [Double] -- Simple test case with known median
       seed = 42
 
