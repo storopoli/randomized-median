@@ -1,0 +1,37 @@
+name: Nix
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build-release:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    name: Nix Devshell Check
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v17
+
+      - name: Cache Nix artifacts
+        uses: DeterminateSystems/flakehub-cache-action@v1
+
+      - name: Nix devshell check stack
+        run: nix develop -L . --command stack build
+
+      - name: Nix devshell check cabal
+        run: |
+          nix develop -L . --command cabal update
+          nix develop -L . --command cabal build

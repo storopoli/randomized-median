@@ -1,0 +1,10 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:randomized-median"
+
+    - path: "app/Main.hs"
+      component: "randomized-median:exe:median-exe"
+
+    - path: "test"
+      component: "randomized-median:test:randomized-median-test"

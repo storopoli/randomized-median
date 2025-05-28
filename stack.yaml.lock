@@ -26,6 +26,13 @@ packages:
   original:
     hackage: random-shuffle-0.0.4@sha256:d0b9783c30208d1ce05caa05139fb00372802edb6c678b73d61b5eb4eebb3aba,818
 - completed:
+    hackage: array-0.5.8.0@sha256:ccbcfb49801de128caf8404bcbad99cd55ccb1b65907bb53910da3d61ec0c39b,1634
+    pantry-tree:
+      sha256: ba8f761fd99dbfd23c87d92ad0a6f90bbfa241d6236ce3c354235e2bf56e4672
+      size: 1135
+  original:
+    hackage: array-0.5.8.0@sha256:ccbcfb49801de128caf8404bcbad99cd55ccb1b65907bb53910da3d61ec0c39b,1634
+- completed:
     hackage: MonadRandom-0.6.2@sha256:a5f8a837e993c008dbcdb61a92a8dbfbbb1231c7fe41439e5ecccd1e9114d8d1,1481
     pantry-tree:
       sha256: ccc961213ddc5d940014316228c4f91035f515173c198ff22d01d73ac41ad28d
