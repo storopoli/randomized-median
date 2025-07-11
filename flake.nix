@@ -2,9 +2,17 @@
   description = "Randomized Median";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
   inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.git-hooks.url = "github:cachix/git-hooks.nix";
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      git-hooks,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
@@ -50,8 +58,11 @@
               "
           '';
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
+          inherit (self.checks.${system}.git-hooks-check) shellHook;
+
           buildInputs = myDevTools ++ haskellDeps;
 
           # Make external Nix c libraries like zlib known to GHC, like
@@ -59,5 +70,17 @@
           # https://github.com/NixOS/nixpkgs/blob/d64780ea0e22b5f61cd6012a456869c702a72f20/pkgs/development/haskell-modules/generic-stack-builder.nix#L38
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath myDevTools;
         };
-      });
+
+        checks.git-hooks-check = git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            hlint.enable = true;
+            nixfmt-rfc-style.enable = true; # Nix formatter
+            fourmolu.enable = true; # Haskell formatter
+            cabal-fmt.enable = true; # cabal formatter
+          };
+        };
+
+      }
+    );
 }
