@@ -18,7 +18,7 @@
 
         hPkgs = pkgs.haskell.packages."ghc984"; # 25.05 GHC version
 
-        myDevTools = [
+        myDevTools = with pkgs; [
           hPkgs.ghc # GHC compiler in the desired version (will be available on PATH)
           hPkgs.ghcid # Continuous terminal Haskell compile checker
           hPkgs.ormolu # Haskell formatter
@@ -29,7 +29,9 @@
           hPkgs.retrie # Haskell refactoring tool
           hPkgs.cabal-install
           stack-wrapped
-          pkgs.zlib # External C library needed by some Haskell packages
+          zlib # External C library needed by some Haskell packages
+          nil # Nix LSP
+          nixfmt-rfc-style # Nix formatter
         ];
 
         haskellDeps = [
